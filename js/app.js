@@ -20,7 +20,7 @@ app.factory('auth', function(localDataStore) {
   };
 });
 
-app.factory('authInterceptor', function ($rootScope, auth, $q) {
+app.factory('authInterceptor', function (auth) {
   return {
     request: function (config) {
       config.headers = config.headers || {};
