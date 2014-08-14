@@ -12,17 +12,20 @@ function createInMemoryDataStore() {
 describe("authInterceptor", function() {
   var _authInterceptor;
   var _auth;
+  var rootScope;
 
   var config = { "headers": {} };
 
   beforeEach(function() {
     module("angular-auth-example", function($provide) {
-      $provide.value('localDataStore', createInMemoryDataStore())
+      $provide.value('localDataStore', createInMemoryDataStore());
+      //rootScope = $rootScope;
     });
 
-    inject(function(authInterceptor, auth) {
+    inject(function(authInterceptor, auth, $rootScope) {
         _authInterceptor = authInterceptor;
         _auth = auth;
+        rootScope = $rootScope;
     });
   });
 
@@ -44,6 +47,20 @@ describe("authInterceptor", function() {
     var returnedConfig = _authInterceptor.request({});
 
     expect(returnedConfig).toEqual({ "headers": { "Authorization" : "Bearer aSecretToken"} });
+  });
+
+  it("should broadcast UNAUTHORIZED when there is 401 response", inject(function(AUTH_EVENTS) {
+    spyOn(rootScope, '$broadcast');
+    _authInterceptor.response({ status: 401});
+
+    expect(rootScope.$broadcast).toHaveBeenCalledWith(AUTH_EVENTS.unauthorized);
+  }));
+
+  it("should broadcast not event for other kind of responses", function() {
+    spyOn(rootScope, '$broadcast');
+    _authInterceptor.response({ status: 200});
+
+    expect(rootScope.$broadcast).not.toHaveBeenCalled();
   });
 });
 
