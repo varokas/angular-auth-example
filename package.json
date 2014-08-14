@@ -4,18 +4,24 @@
   "description": "PasteMath",
   "main": "gulpfile.js",
   "dependencies": {
-    "express": "^4.7.2"
+    "body-parser": "^1.6.3",
+    "express": "^4.7.2",
+    "express-jwt": "^0.3.1",
+    "jsonwebtoken": "^0.4.1"
   },
   "devDependencies": {
     "gulp": "^3.8.6",
+    "gulp-bg": "0.0.5",
     "gulp-bower": "^0.0.6",
     "gulp-gh-pages": "^0.3.3",
     "gulp-jasmine": "^0.3.0",
     "gulp-karma": "0.0.4",
     "gulp-rimraf": "^0.1.0",
+    "jsonwebtoken": "^0.4.1",
     "karma": "^0.12.19",
     "karma-jasmine": "~0.2.0",
-    "karma-phantomjs-launcher": "^0.1.4"
+    "karma-phantomjs-launcher": "^0.1.4",
+    "request": "^2.40.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

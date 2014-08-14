@@ -3,6 +3,7 @@ var bower = require('gulp-bower');
 var rimraf = require('gulp-rimraf');
 var jasmine = require('gulp-jasmine');
 var karma = require('karma').server;
+var bg = require("gulp-bg");
 
 var karmaConf = {
   browsers: ['PhantomJS'],
@@ -38,4 +39,11 @@ gulp.task('lib', function() {
 
 gulp.task('test', function (done) {
   karma.start(karmaConf, done);
+});
+
+gulp.task("sample-server", bg("node", "app.js"));
+
+gulp.task('spec', function () {
+  gulp.src('spec/server_spec.js')
+      .pipe(jasmine());
 });

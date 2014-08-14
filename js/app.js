@@ -20,7 +20,11 @@ app.factory('auth', function(localDataStore) {
   };
 });
 
-app.factory('authInterceptor', function (auth) {
+app.constant('AUTH_EVENTS', {
+  'unauthorized': 'AUTH_EVENTS::unauthorized'
+});
+
+app.factory('authInterceptor', function ($rootScope, auth, AUTH_EVENTS) {
   return {
     request: function (config) {
       config.headers = config.headers || {};
@@ -31,7 +35,7 @@ app.factory('authInterceptor', function (auth) {
     },
     response: function (response) {
       if (response.status === 401) {
-
+        $rootScope.$broadcast(AUTH_EVENTS.unauthorized);
       }
       return response;
     }
